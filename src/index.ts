@@ -1,7 +1,5 @@
-import axios, { AxiosRequestConfig } from "axios";
 import fastify from "fastify";
-import * as test_request_get_points from './test_request_get_points.json';
-import * as test_request_create_order from './test_request_create_order.json';
+import axios, { AxiosRequestConfig } from "axios";
 import { ResponsePointListInfo } from './classes/response-point-list-info';
 import { BoxBerryApiMethods } from './classes/enums/box-berry-api-methods';
 import { PointBoxBerryResponse } from './classes/box-berry-classes/point-box-berry-response';
@@ -9,11 +7,12 @@ import { CountryISO } from './classes/enums/country-iso';
 import { BOX_BERRY_URL, CREATE_ORDER_CONTENT_TYPE, TOKEN } from './constants';
 import { RequestPointListGeoData } from './classes/request-point-list-geo-data';
 import { ResponseErrorPointList } from './classes/response-error-point-list';
+import { RequestPointListData } from "./classes/request-point-list-data";
 
 const server = fastify();
 
-server.get("/pickup-list", async (): Promise<ResponseErrorPointList | ResponsePointListInfo[]> => {
-  const requestData = test_request_get_points;
+server.post("/pickup-list", async (req: any, res): Promise<ResponseErrorPointList | ResponsePointListInfo[]> => {
+  const requestData: RequestPointListData = req.body;
 
   if (!requestData || !requestData?.geoData) {
     throw new Error('Нет информации о местоположении!');
@@ -22,8 +21,8 @@ server.get("/pickup-list", async (): Promise<ResponseErrorPointList | ResponsePo
   return getPickupList(requestData.geoData);
 });
 
-server.get("/create-order", async (): Promise<string> => {
-  const orderData = test_request_create_order;
+server.post("/create-order", async (req: any, res): Promise<string> => {
+  const orderData: RequestPointListData = req.body;
 
   const newOrderTrack = await createOrderAtBoxBerry(orderData);
   await addTrackToAirTable(newOrderTrack);
@@ -101,12 +100,12 @@ const createOrderAtBoxBerry = async (order: any): Promise<string> => {
   };
 
   const body = {
-    token: 'd6f33e419c16131e5325cbd84d5d6000', //TODO fix
+    token: TOKEN,
     method: BoxBerryApiMethods.ParselCreate,
     sdata: JSON.stringify(order),
   };
 
-  const { data } = await axios.post<{ track: string, notification: string, label: string }>(BOX_BERRY_URL, body, requestConfig);
+  // const { data } = await axios.post<{ track: string, notification: string, label: string }>(BOX_BERRY_URL, body, requestConfig);
   // return data?.track; //TODO uncomment
   return 'AAP127020243';
 }
