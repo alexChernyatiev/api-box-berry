@@ -1,6 +1,6 @@
 import app from "./app";
 
-const FASTIFY_PORT = Number(process.env.FASTIFY_PORT) || 3001;
+const FASTIFY_PORT = Number(process.env.FASTIFY_PORT) || 8015;
 
 async () => await app.after();
 app.listen(

@@ -1,4 +1,4 @@
-export class RequestPointListGeoData {
+export interface RequestPointListGeoData {
   name: string; //'Иваново';
   fullName: string; //'Россия, Ивановская область, г Иваново';
   postalCode: string; //'153020';

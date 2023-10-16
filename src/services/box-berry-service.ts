@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { BoxBerryApiMethods } from '../classes/enums/box-berry-api-methods';
-import { PointBoxBerryResponse } from '../classes/box-berry-classes/point-box-berry-response';
+import { BoxBerryApiMethods } from '../interfaces/enums/box-berry-api-methods';
+import { PointBoxBerryResponse } from '../interfaces/box-berry-interfaces/point-box-berry-response';
 import { BOX_BERRY_URL, CREATE_ORDER_CONTENT_TYPE } from '../constants';
 
 export class BoxBerryService {
@@ -38,6 +38,11 @@ export class BoxBerryService {
         };
 
         const { data } = await axios.post<{ track: string, notification: string, label: string }>(BOX_BERRY_URL, body, requestConfig);
+
+        if(!data?.track) {
+            throw new Error('Проблема при создании заказа в BoxBerry.');
+        }
+
         return data?.track;
     }
 }

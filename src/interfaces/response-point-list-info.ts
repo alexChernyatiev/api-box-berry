@@ -1,4 +1,4 @@
-export class ResponsePointListInfo {
+export interface ResponsePointListInfo {
   id: string;
   postalCode: string;
   name: string;

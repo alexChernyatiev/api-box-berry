@@ -1,4 +1,4 @@
-export class PointBoxBerryResponse {
+export interface PointBoxBerryResponse {
   Code: string; //"37231",
   Name: string; //"Иваново Громобоя_3723_С",
   CityCode: string; //"17",
