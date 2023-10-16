@@ -12,7 +12,7 @@ const cache = new NodeCache({
 
 export default async function listPointsController(fastify: FastifyInstance) {
   //TODO remove
-  fastify.post("/", async function (
+  fastify.get("/", async function (
     _request: FastifyRequest,
     reply: FastifyReply
   ): Promise<void> {
