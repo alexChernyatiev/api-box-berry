@@ -10,6 +10,7 @@ export class AirTableRepository {
         this.base = new Airtable({ apiKey: process.env.AIR_TABLE_API_KEY }).base(baseId);
     }
 
+    //TODO remove
     // public async getRecords(table: Table<FieldSet>) {
     //     let records;
     //     try {
@@ -32,8 +33,8 @@ export class AirTableRepository {
                 'Способ доставки': this.DELIVERY_METHOD,
                 'Трек-код': track,
             });
-        } catch (err) {
-            console.log(err);
+        } catch (err: any) {
+            console.log('Произошла проблема при сохранении "Трек-код" в AirTable', err?.message);
             throw err;
         }
 

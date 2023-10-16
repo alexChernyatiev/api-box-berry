@@ -20,8 +20,13 @@ export class BoxBerryService {
             },
         };
 
-        const { data } = await axios.get<PointBoxBerryResponse[]>(BOX_BERRY_URL, requestConfig);
-        return data;
+        try {
+            const { data } = await axios.get<PointBoxBerryResponse[]>(BOX_BERRY_URL, requestConfig);
+            return data;
+        } catch (err: any) {
+            console.log('Произошла проблема при получении списка ПВЗ из BoxBerry.', err?.message);
+            throw err;
+        }
     }
 
     public static async createOrderAtBoxBerry(order: any): Promise<string> {
@@ -37,12 +42,19 @@ export class BoxBerryService {
             sdata: JSON.stringify(order),
         };
 
-        const { data } = await axios.post<{ track: string, notification: string, label: string }>(BOX_BERRY_URL, body, requestConfig);
+        let track;
+        try {
+            const { data } = await axios.post<{ track: string, notification: string, label: string }>(BOX_BERRY_URL, body, requestConfig);
+            track = data?.track;
+        } catch (err: any) {
+            console.log('Произошла проблема при создании заказа в BoxBerry.', err.message);
+            throw err;
+        }
 
-        if(!data?.track) {
+        if(!track) {
             throw new Error('Проблема при создании заказа в BoxBerry.');
         }
 
-        return data?.track;
+        return track;
     }
 }

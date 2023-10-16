@@ -6,11 +6,19 @@ import { CONTENT_TYPE, CONTENT_TYPE_VALUE_RESPONSE } from "../constants";
 import { ListPointsService } from "../services/listPointsService";
 
 const cache = new NodeCache({
-  stdTTL: 60, //* 60 * 6, // cache data for 6 hours
+  stdTTL: 60 * 60 * 6, // cache data for 6 hours
   checkperiod: 0,
 });
 
 export default async function listPointsController(fastify: FastifyInstance) {
+  //TODO remove
+  fastify.post("/", async function (
+    _request: FastifyRequest,
+    reply: FastifyReply
+  ): Promise<void> {
+    return reply.send('Hello world!'); 
+  });
+
   fastify.post("/", async function (
     _request: FastifyRequest,
     reply: FastifyReply
