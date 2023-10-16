@@ -3,6 +3,7 @@ import { RequestPointListGeoData } from "../interfaces/request-point-list-geo-da
 import { ResponseErrorPointList } from "../interfaces/classes/response-error-point-list";
 import { ResponsePointListInfo } from "../interfaces/response-point-list-info";
 import { BoxBerryService } from "./box-berry-service";
+import { BOX_BERRY_LIST_ERR_MESSAGE } from "../constants";
 
 export class ListPointsService {
     public static async getPickupList(
@@ -19,7 +20,9 @@ export class ListPointsService {
             cityCode,
         );
 
-        if (!points?.length) {
+        if (!points?.length || 
+            (points[0].err && points[0].err === BOX_BERRY_LIST_ERR_MESSAGE)
+        ) {
             return new ResponseErrorPointList(geoData?.countryIso, geoData.name);
         }
 

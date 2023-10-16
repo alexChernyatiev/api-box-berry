@@ -24,4 +24,5 @@ export interface PointBoxBerryResponse {
   NalKD: string; //"No",
   OnlyPrepaidOrders: string; //"No",
   Postamat: boolean; //false
+  err?: string; //"Данные не найдены"
 }
