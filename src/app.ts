@@ -38,7 +38,10 @@ const options = {
 server.register(router);
 server.register(fastifyEnv, options);
 server.register(cors, {
-    origin: ['https://bonyasbox.ru'],
+    origin: [
+        'https://bonyasbox.ru',
+        'https://bonyasbox.ru/'
+    ],
 });
 
 export default server;
