@@ -10,6 +10,6 @@ app.listen(
       console.error(err);
       process.exit(1);
     }
-    console.log(`Server listening at ${address}; process_id=${process.pid}`);
+    console.log(`[${process.pid}] Server listening at ${address}.`);
   }
 );

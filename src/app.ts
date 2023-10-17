@@ -4,8 +4,6 @@ import cors from '@fastify/cors';
 import formbody from '@fastify/formbody';
 import router from './router';
 
-const server = fastify();
-
 const schema = {
     type: 'object',
     required: ['FASTIFY_PORT', 'BOX_BERRY_TOKEN', 'AIR_TABLE_API_KEY', 'AIR_TABLE_BASE', 'AIR_TABLE_ORDER_TABLE'],
@@ -36,8 +34,10 @@ const options = {
     data: process.env
 }
 
+const server = fastify();
+
+server.register(formbody, { parser: str => JSON.parse(str) });
 server.register(fastifyEnv, options);
-server.register(formbody);
 server.register(router);
 server.register(cors, {
     origin: [
