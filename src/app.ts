@@ -1,7 +1,8 @@
-import fastify from "fastify";
-import fastifyEnv from "@fastify/env";
-import cors from "@fastify/cors";
-import router from "./router";
+import fastify from 'fastify';
+import fastifyEnv from '@fastify/env';
+import cors from '@fastify/cors';
+import formbody from '@fastify/formbody';
+import router from './router';
 
 const server = fastify();
 
@@ -37,6 +38,7 @@ const options = {
 
 server.register(router);
 server.register(fastifyEnv, options);
+server.register(formbody);
 server.register(cors, {
     origin: [
         'https://bonyasbox.ru',
