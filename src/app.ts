@@ -36,9 +36,9 @@ const options = {
     data: process.env
 }
 
-server.register(router);
 server.register(fastifyEnv, options);
 server.register(formbody);
+server.register(router);
 server.register(cors, {
     origin: [
         'https://bonyasbox.ru',
