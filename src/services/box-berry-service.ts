@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { BoxBerryApiMethods } from '../interfaces/enums/box-berry-api-methods';
 import { PointBoxBerryResponse } from '../interfaces/box-berry-interfaces/point-box-berry-response';
 import { BOX_BERRY_URL, CREATE_ORDER_CONTENT_TYPE } from '../constants';
+import { CreateErrBoxBerryResponse } from "../interfaces/box-berry-interfaces/create-err-box-berry-response";
 
 export class BoxBerryService {
     private static readonly prepaidForBoxBerry = 1;
@@ -24,7 +25,7 @@ export class BoxBerryService {
             const { data } = await axios.get<PointBoxBerryResponse[]>(BOX_BERRY_URL, requestConfig);
             return data;
         } catch (err: any) {
-            console.log('Произошла проблема при получении списка ПВЗ из BoxBerry.', err?.message);
+            console.log('Problem with getting list of points in BoxBerry.', err?.message);
             throw err;
         }
     }
@@ -44,17 +45,17 @@ export class BoxBerryService {
 
         let track;
         try {
-            const { data } = await axios.post<{ track: string, notification: string, label: string }>(BOX_BERRY_URL, body, requestConfig);
+            const { data } = await axios.post<CreateErrBoxBerryResponse>(BOX_BERRY_URL, body, requestConfig);
             track = data?.track;
+
+            if(!track) {
+                throw new Error(`Problem with creating order in BoxBerry: ${data.err}.`);
+            }
+
+            return track;
         } catch (err: any) {
-            console.log('Произошла проблема при создании заказа в BoxBerry.', err.message);
+            console.log('Problem with creating order in .', err.message);
             throw err;
         }
-
-        if(!track) {
-            throw new Error('Проблема при создании заказа в BoxBerry.');
-        }
-
-        return track;
     }
 }

@@ -34,7 +34,7 @@ export class AirTableRepository {
                 'Трек-код': track,
             });
         } catch (err: any) {
-            console.log('Произошла проблема при сохранении "Трек-код" в AirTable', err?.message);
+            console.log('Problem with saving "Track" to AirTable', err?.message);
             throw err;
         }
 
