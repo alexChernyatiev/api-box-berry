@@ -23,7 +23,7 @@ export class AirTableRepository {
     //     return records;
     // }
 
-    public async saveTrackToAirTable(order_id: string, track: string): Promise<string> {
+    public async saveTrack(order_id: string, track: string): Promise<string> {
         const table = this.base(process.env.AIR_TABLE_ORDER_TABLE || '');
 
         let res;
