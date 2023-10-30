@@ -23,11 +23,12 @@ export class AirTableRepository {
     //     return records;
     // }
 
-    public async saveTrack(order_id: string, track: string): Promise<string> {
+    public async save(order_id: string, track: string): Promise<string> {
         const table = this.base(process.env.AIR_TABLE_ORDER_TABLE || '');
 
         let res;
         try {
+            //TODO fix create to edit and save to AirTable before BoxBerry
             res = await table.create({
                 'Номер заказа': order_id,
                 'Способ доставки': this.DELIVERY_METHOD,

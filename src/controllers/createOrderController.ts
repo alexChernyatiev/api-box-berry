@@ -14,7 +14,7 @@ export default async function createOrderController(fastify: FastifyInstance) {
         const newOrderTrack = await BoxBerryService.createOrderAtBoxBerry(orderData);
 
         const airTable = new AirTableRepository();
-        await airTable.saveTrack(orderData.order_id, newOrderTrack);
+        await airTable.save(orderData.order_id, newOrderTrack);
 
         reply
           .header(CONTENT_TYPE, CONTENT_TYPE_VALUE_RESPONSE)
